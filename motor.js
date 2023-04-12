@@ -142,44 +142,58 @@ function calculoMotor(tipoNomina, fechaPrimerEmpleo, genero){
     td.textContent= genero
     tr.append(td)
     let montoMaximo, montoMinimo
+    console.log("MESES", meses)
     data.map(row=>{
-        // console.log("min", row.minimo)
         if(row.minimo){
             row.minimo.forEach(item => {
-                console.log("item", item)
-                if(meses <=26 && item.meses ==26){
-                    montoMinimo = item.minimos[tipoNomina]
-                    return
-                }else if(meses >=30 && item.meses ==30){
-                    montoMinimo = item.minimos[tipoNomina]
-                    return
+                
+                
+                if(Number(meses) <27){
+                    if(Number(item.meses) <27){
+                        montoMinimo = item.minimos[tipoNomina]
+
+                    }
+                }else if(Number(meses) >= 30){
+                    if(Number(item.meses) ==30){
+                        montoMinimo = item.minimos[tipoNomina]
+     
+                    }
                 }else{
                     montoMinimo = item.minimos[tipoNomina]
+                    console.log("epa", montoMinimo)
+                    return
                 }                
             });
-            td = document.createElement('td')
-            td.textContent= montoMinimo
-            tr.append(td)
+            
         }
         if(row.maximo){
             row.maximo.forEach(item => {
                 console.log("item", item)
-                if(meses <=26 && item.meses ==26){
-                    montoMaximo = item.maximos[tipoNomina]
-                    return
-                }else if(meses >=30 && item.meses ==30){
-                    montoMaximo = item.maximos[tipoNomina]
-                    return
+                if(meses <27){
+                    if(Number(item.meses) <27){
+                        montoMaximo = item.maximos[tipoNomina]
+                        return
+                    }
+                }else if(meses >=30){
+                    if(item.meses ==30){
+                        montoMaximo = item.maximos[tipoNomina]
+                        return
+                    }
                 }else{
                     montoMaximo = item.maximos[tipoNomina]
+                    return
                 }                
             });
-            td = document.createElement('td')
-            td.textContent= montoMaximo
-            tr.append(td)
         }
 
     })
+    td = document.createElement('td')
+    td.textContent= montoMinimo
+    tr.append(td)
+
+    td = document.createElement('td')
+    td.textContent= montoMaximo
+    tr.append(td)
 
     p1 = montoMinimo + Math.sqrt(montoMaximo - montoMinimo)
     p2 = montoMinimo + 0.0175 * (montoMaximo - montoMinimo)
