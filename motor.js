@@ -101,14 +101,105 @@ const masculino = [
 ]
 
 
-/* 
-    Por falta de Tiempo ya no hice Femeninos pero es solo cuestion de llenar el objetos con sus arrays
-    La logica ya esta lista
-
-*/
-
-
-const femenino = []
+const femenino = [{
+        minimo: [
+            {
+                meses: 24,
+                minimos: [
+                    a = 800,
+                    b=800,
+                    c=200,
+                    d=500
+                ]
+            },
+            {
+                meses: 25,
+                minimos: [
+                    a= 800,
+                    b=700,
+                    c=900,
+                    d=1000
+                ]
+            },
+            {
+                meses: 26,
+                minimos: [
+                    a= 800,
+                    b=100,
+                    c=700,
+                    d=600
+                ]
+            },
+            {
+                meses: 27,
+                minimos: [
+                    a= 600,
+                    b=600,
+                    c=800,
+                    d=400
+                ]
+            },
+            {
+                meses: 28,
+                minimos: [
+                    a= 200,
+                    b=700,
+                    c=100,
+                    d=700
+                ]
+            }
+        ]
+    },
+    {
+        maximo: [
+            {
+                meses: 24,
+                maximos: [
+                    a= 400,
+                    b=4700,
+                    c=4600,
+                    d=5000
+                ]
+            },
+            {
+                meses: 25,
+                maximos: [
+                    a= 4200,
+                    b=4200,
+                    c=4900,
+                    d=4900
+                ]
+            },
+            {
+                meses: 26,
+                maximos: [
+                    a= 4100,
+                    b=4500,
+                    c=4600,
+                    d=4700
+                ]
+            },
+            {
+                meses: 27,
+                maximos: [
+                    a= 4200,
+                    b=4300,
+                    c=4700,
+                    d=5000
+                ]
+            },
+            {
+                meses: 28,
+                maximos: [
+                    a= 4500,
+                    b=4900,
+                    c=4600,
+                    d=4300
+                ]
+            }
+        ]
+    }
+]
 
 document.addEventListener('DOMContentLoaded', ()=>{
     const  btnCalcular = document.querySelector('#btnCalcular')
@@ -116,9 +207,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const date = document.querySelector('#date')
     const sex = document.querySelector('#sex')
     //TODO: validar form
-
-
-
     btnCalcular.addEventListener('click', ()=> calculoMotor(type.value, date.value, sex.value))
 })
 
@@ -139,50 +227,78 @@ function calculoMotor(tipoNomina, fechaPrimerEmpleo, genero){
     td.textContent= fechaPrimerEmpleo
     tr.append(td)
     td = document.createElement('td')
-    td.textContent= genero
+    td.textContent= genero.toUpperCase()
     tr.append(td)
     let montoMaximo, montoMinimo
     console.log("MESES", meses)
+    console.log("data", data)
     data.map(row=>{
         if(row.minimo){
             row.minimo.forEach(item => {
-                
-                
-                if(Number(meses) <27){
-                    if(Number(item.meses) <27){
-                        montoMinimo = item.minimos[tipoNomina]
+                if(genero.toLowerCase() == 'm'){
+                    if(Number(meses) <27){
+                        if(Number(item.meses) <27){
+                            montoMinimo = item.minimos[tipoNomina]
 
-                    }
-                }else if(Number(meses) >= 30){
-                    if(Number(item.meses) ==30){
+                        }
+                    }else if(Number(meses) >= 30){
+                        if(Number(item.meses) == 30){
+                            montoMinimo = item.minimos[tipoNomina]
+                        }
+                    }else{
                         montoMinimo = item.minimos[tipoNomina]
-     
-                    }
+                        return
+                    } 
                 }else{
-                    montoMinimo = item.minimos[tipoNomina]
-                    console.log("epa", montoMinimo)
-                    return
-                }                
+                    if(Number(meses) <25){
+                        if(Number(item.meses) <25){
+                            montoMinimo = item.minimos[tipoNomina]
+
+                        }
+                    }else if(Number(meses) >= 28){
+                        if(Number(item.meses) == 28){
+                            montoMinimo = item.minimos[tipoNomina]
+                        }
+                    }else{
+                        montoMinimo = item.minimos[tipoNomina]
+                        return
+                    } 
+                }              
             });
             
         }
         if(row.maximo){
             row.maximo.forEach(item => {
-                console.log("item", item)
-                if(meses <27){
-                    if(Number(item.meses) <27){
-                        montoMaximo = item.maximos[tipoNomina]
-                        return
-                    }
-                }else if(meses >=30){
-                    if(item.meses ==30){
+                if(genero.toLowerCase() == 'm'){
+                    if(meses <27){
+                        if(Number(item.meses) <27){
+                            montoMaximo = item.maximos[tipoNomina]
+                            return
+                        }
+                    }else if(meses >=30){
+                        if(item.meses ==30){
+                            montoMaximo = item.maximos[tipoNomina]
+                            return
+                        }
+                    }else{
                         montoMaximo = item.maximos[tipoNomina]
                         return
                     }
                 }else{
-                    montoMaximo = item.maximos[tipoNomina]
-                    return
-                }                
+                    if(Number(meses) <25){
+                        if(Number(item.meses) <25){
+                            montoMaximo = item.maximos[tipoNomina]
+
+                        }
+                    }else if(Number(meses) >= 28){
+                        if(Number(item.meses) == 28){
+                            montoMaximo = item.maximos[tipoNomina]
+                        }
+                    }else{
+                        montoMaximo = item.maximos[tipoNomina]
+                        return
+                    } 
+                }       
             });
         }
 
